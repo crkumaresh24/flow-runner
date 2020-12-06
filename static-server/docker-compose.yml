@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  staticServer:
+    image: halverneus/static-file-server
+    restart: always
+    ports:
+      - 8000:8080
+    volumes:
+      - ./files:/web

@@ -1,0 +1,55 @@
+{
+  "attributes": {},
+  "nodes": [
+    {
+      "key": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+      "attributes": {
+        "type": "START_TASK",
+        "title": "START_TASK",
+        "id": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+        "request": {},
+        "uiConfig": {
+          "offsetX": 45,
+          "offsetY": 277,
+          "taskPanelWidth": "480"
+        }
+      }
+    },
+    {
+      "key": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+      "attributes": {
+        "type": "STOP_TASK",
+        "title": "STOP_TASK",
+        "id": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+        "request": {},
+        "uiConfig": {
+          "offsetX": 1108,
+          "offsetY": 130,
+          "taskPanelWidth": "480"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+      "target": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+      "key": "dc8e23a3-ddc8-4f56-b6a5-877614c8b7a1",
+      "attributes": {
+        "source": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+        "target": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+        "lx": 1078,
+        "ly": 413,
+        "rx": 1120,
+        "ry": 130,
+        "startTask": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+        "endTask": "fbb62ad4-e50f-420d-9f23-e38cef0aee14"
+      }
+    }
+  ],
+  "options": {
+    "type": "directed",
+    "multi": false,
+    "allowSelfLoops": true
+  }
+}
