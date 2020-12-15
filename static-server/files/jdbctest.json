@@ -1,0 +1,125 @@
+{
+ "attributes": {},
+ "nodes": [
+  {
+   "key": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+   "attributes": {
+    "type": "START_TASK",
+    "title": "START_TASK",
+    "id": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+    "request": {},
+    "uiConfig": {
+     "offsetX": 44,
+     "offsetY": 345,
+     "taskPanelWidth": "480"
+    }
+   }
+  },
+  {
+   "key": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+   "attributes": {
+    "type": "STOP_TASK",
+    "title": "STOP_TASK",
+    "id": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+    "request": {},
+    "uiConfig": {
+     "offsetX": 964,
+     "offsetY": 224,
+     "taskPanelWidth": "480"
+    }
+   }
+  },
+  {
+   "key": "39a33cbc-b21f-415c-8037-29d38796d344",
+   "attributes": {
+    "type": "READ_JDBC_TABLE_TASK",
+    "title": "READ_JDBC_TABLE_TASK",
+    "id": "39a33cbc-b21f-415c-8037-29d38796d344",
+    "request": {
+     "driver": "org.postgresql.Driver",
+     "url": "jdbc:postgresql://host.docker.internal/postgres",
+     "user": "postgres",
+     "password": "postgres",
+     "dbtable": "public.resource_types"
+    },
+    "uiConfig": {
+     "offsetX": 127,
+     "offsetY": 226,
+     "taskPanelWidth": "480"
+    }
+   }
+  },
+  {
+   "key": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+   "attributes": {
+    "type": "WRITE_JDBC_TABLE_TASK",
+    "title": "WRITE_JDBC_TABLE_TASK",
+    "id": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+    "request": {
+     "driver": "org.postgresql.Driver",
+     "url": "jdbc:postgresql://host.docker.internal/postgres",
+     "user": "postgres",
+     "password": "postgres",
+     "dbtable": "public.test_table"
+    },
+    "uiConfig": {
+     "offsetX": 532,
+     "offsetY": 200,
+     "taskPanelWidth": "560"
+    }
+   }
+  }
+ ],
+ "edges": [
+  {
+   "source": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+   "target": "39a33cbc-b21f-415c-8037-29d38796d344",
+   "key": "75ae7269-12e9-46ff-aac9-a5153a2508f8",
+   "attributes": {
+    "source": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+    "target": "39a33cbc-b21f-415c-8037-29d38796d344",
+    "lx": 60,
+    "ly": 345,
+    "rx": 143,
+    "ry": 242,
+    "startTask": "e87bd980-1f2a-4836-a7c0-dac8deeb63b6",
+    "endTask": "39a33cbc-b21f-415c-8037-29d38796d344"
+   }
+  },
+  {
+   "source": "39a33cbc-b21f-415c-8037-29d38796d344",
+   "target": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+   "key": "addc5112-8037-433a-b181-16bb6ff7378b",
+   "attributes": {
+    "source": "39a33cbc-b21f-415c-8037-29d38796d344",
+    "target": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+    "lx": 377,
+    "ly": 244,
+    "rx": 548,
+    "ry": 216,
+    "startTask": "39a33cbc-b21f-415c-8037-29d38796d344",
+    "endTask": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084"
+   }
+  },
+  {
+   "source": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+   "target": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+   "key": "82acb58f-6409-4351-ace4-33baa522990e",
+   "attributes": {
+    "source": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+    "target": "fbb62ad4-e50f-420d-9f23-e38cef0aee14",
+    "lx": 789,
+    "ly": 218,
+    "rx": 976,
+    "ry": 224,
+    "startTask": "23fd3e53-5c9d-47d1-9fe4-19ec9c4f5084",
+    "endTask": "fbb62ad4-e50f-420d-9f23-e38cef0aee14"
+   }
+  }
+ ],
+ "options": {
+  "type": "directed",
+  "multi": false,
+  "allowSelfLoops": true
+ }
+}

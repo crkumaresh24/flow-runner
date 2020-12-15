@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
 
-    implementation group: 'com.stacksnow', name: 'app', version: '1.0-SNAPSHOT'
+    implementation group: 'com.stacksnow', name: 'core', version: '1.0-SNAPSHOT'
 
     implementation group: 'org.alluxio', name: 'alluxio-core-common', version: '2.1.0'
     implementation group: 'org.alluxio', name: 'alluxio-core-client-fs', version: '2.1.0'

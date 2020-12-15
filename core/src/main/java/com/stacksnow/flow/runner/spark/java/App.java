@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class App {
-    public DirectedAcyclicGraph startDAG(DAG dag, Map<String, RunnerEntry> runnerEntries) throws Exception {
+    public DirectedAcyclicGraph startDAG(Map<String, RunnerEntry> runnerEntries, DAG dag) throws Exception {
         DirectedAcyclicGraph<Node, Edge> graph = new DirectedAcyclicGraph(Edge.class);
         dag.getNodes().forEach(node -> {
             if (null != node.getAttributes()) {
@@ -54,7 +54,7 @@ public class App {
         return graph;
     }
 
-    private void start(String planFileUrl, String runnersListUrl) throws Exception {
+    private void start(String runnersListUrl, String planFileUrl) throws Exception {
         String runnersList = IOUtils.toString(new URL(runnersListUrl), StandardCharsets.UTF_8);
         String dagString = IOUtils.toString(new URL(planFileUrl), StandardCharsets.UTF_8);
         Gson gson = new Gson();
@@ -62,7 +62,7 @@ public class App {
         Type runnerType = new TypeToken<Map<String, RunnerEntry>>() {
         }.getType();
         Map<String, RunnerEntry> runnerEntries = gson.fromJson(runnersList, runnerType);
-        startDAG(dag, runnerEntries);
+        startDAG(runnerEntries, dag);
     }
 
     public static void main(String[] args) throws Exception {
