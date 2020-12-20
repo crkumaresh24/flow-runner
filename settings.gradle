@@ -10,4 +10,5 @@
 rootProject.name = 'flow-runner-spark-cluster-java'
 include('core')
 include('tasks')
+include('services')
 

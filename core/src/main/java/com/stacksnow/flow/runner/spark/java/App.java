@@ -7,10 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stacksnow.flow.runner.spark.java.cli.ITask;
 import com.stacksnow.flow.runner.spark.java.contextmanagers.SparkFlowContext;
-import com.stacksnow.flow.runner.spark.java.model.DAG;
-import com.stacksnow.flow.runner.spark.java.model.Edge;
-import com.stacksnow.flow.runner.spark.java.model.Node;
-import com.stacksnow.flow.runner.spark.java.model.RunnerEntry;
+import com.stacksnow.flow.runner.spark.java.model.*;
 import org.apache.commons.io.IOUtils;
 import org.jgrapht.experimental.dag.DirectedAcyclicGraph;
 import org.jgrapht.traverse.TopologicalOrderIterator;
@@ -58,7 +55,7 @@ public class App {
         String runnersList = IOUtils.toString(new URL(runnersListUrl), StandardCharsets.UTF_8);
         String dagString = IOUtils.toString(new URL(planFileUrl), StandardCharsets.UTF_8);
         Gson gson = new Gson();
-        DAG dag = gson.fromJson(dagString, DAG.class);
+        DAG dag = gson.fromJson(dagString, Flow.class).getDag();
         Type runnerType = new TypeToken<Map<String, RunnerEntry>>() {
         }.getType();
         Map<String, RunnerEntry> runnerEntries = gson.fromJson(runnersList, runnerType);

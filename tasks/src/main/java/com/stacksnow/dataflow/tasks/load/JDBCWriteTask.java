@@ -15,6 +15,7 @@ public class JDBCWriteTask implements ITask<Dataset<Row>> {
         Map<String, String> jdbcParseOptions = new HashMap<>();
         request.forEach((key, value) -> jdbcParseOptions.put(key, String.valueOf(value)));
         dataset.write().format("jdbc")
+                .mode(jdbcParseOptions.getOrDefault("mode", "error"))
                 .options(jdbcParseOptions)
                 .save();
         return dataset;

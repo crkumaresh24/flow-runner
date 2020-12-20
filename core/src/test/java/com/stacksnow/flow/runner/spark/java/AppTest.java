@@ -28,7 +28,7 @@ public class AppTest {
         App classUnderTest = new App();
         DAG dag = getSampleFlowJSON();
         Map<String, RunnerEntry> runnerEntries = getRunnersList();
-        DirectedAcyclicGraph directedAcyclicGraph = classUnderTest.startDAG(dag, runnerEntries);
+        DirectedAcyclicGraph directedAcyclicGraph = classUnderTest.startDAG(runnerEntries, dag);
         assertNotNull("graph should not be null", directedAcyclicGraph);
         assertEquals(2, directedAcyclicGraph.vertexSet().size());
     }
