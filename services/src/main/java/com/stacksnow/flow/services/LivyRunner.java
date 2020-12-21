@@ -24,7 +24,7 @@ public class LivyRunner {
     @Value("${staticServer.url:http://localhost:8000}")
     private String STATIC_SERVER_URL;
 
-    @Value("${staticServer.url:http://localhost:9090}")
+    @Value("${flowServer.url:http://localhost:9090}")
     private String FLOW_SERVER_URL;
 
     public LivyRunner() {

@@ -16,3 +16,9 @@ spring:
 livy:
   url: http://localhost:8998
 
+staticServer:
+  url: http://localhost:8000
+
+flowServer:
+  url: http://localhost:9090
+
