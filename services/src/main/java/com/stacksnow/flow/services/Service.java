@@ -1,5 +1,11 @@
 package com.stacksnow.flow.services;
 
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.Protocol;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.Bucket;
 import com.stacksnow.flow.services.models.DAG;
 import com.stacksnow.flow.services.models.Flow;
 import com.stacksnow.flow.services.models.Process;
@@ -11,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityNotFoundException;
 import java.net.URISyntaxException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -18,12 +25,17 @@ public class Service {
     private final IFlowRepository flowRepository;
     private final IProcessRepository processRepository;
     private final LivyRunner livyRunner;
+    private final AmazonS3 s3;
 
     @Autowired
     public Service(IFlowRepository flowRepository, IProcessRepository processRepository, LivyRunner livyRunner) {
         this.flowRepository = flowRepository;
         this.processRepository = processRepository;
         this.livyRunner = livyRunner;
+        s3 = AmazonS3ClientBuilder
+                .standard()
+                .withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTP))
+                .withRegion(Regions.DEFAULT_REGION).build();
     }
 
     public Iterable<Flow> list() {
@@ -81,5 +93,9 @@ public class Service {
 
     public Process readProcess(String id) {
         return this.processRepository.findById(UUID.fromString(id)).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Iterable<String> buckets() {
+        return s3.listBuckets().stream().map(Bucket::getName).collect(Collectors.toList());
     }
 }

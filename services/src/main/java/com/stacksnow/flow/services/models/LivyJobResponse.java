@@ -3,6 +3,6 @@ package com.stacksnow.flow.services.models;
 import lombok.Data;
 
 @Data
-public class LivyResponse {
+public class LivyJobResponse {
     private long id;
 }

@@ -16,6 +16,8 @@ public class ParseFileTask implements ITask<Dataset<Row>> {
         Map<String, Object> options = (Map<String, Object>) request.get("options");
         options.forEach((key, value) -> csvParserOption.put(key, String.valueOf(value)));
         SparkFlowContext context = (SparkFlowContext) flowContext;
-        return context.getSparkSession().read().options(csvParserOption).csv(String.valueOf(request.get("path")));
+        String path = "s3a://" + request.get("bucketName") + "/files/" + request.get("path");
+        csvParserOption.put("path", path);
+        return context.getSparkSession().read().options(csvParserOption).csv(path);
     }
 }

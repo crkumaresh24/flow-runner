@@ -35,6 +35,11 @@ public class Controller {
         return this.service.processes();
     }
 
+    @GetMapping("/buckets")
+    public Iterable<String> buckets() {
+        return this.service.buckets();
+    }
+
     @PostMapping
     public Flow create(@RequestBody Map<String, Object> request) {
         DAG dag = this.objectMapper.convertValue(request.get("dag"), DAG.class);

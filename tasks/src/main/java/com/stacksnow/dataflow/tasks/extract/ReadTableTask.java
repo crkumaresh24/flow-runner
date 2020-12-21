@@ -2,20 +2,18 @@ package com.stacksnow.dataflow.tasks.extract;
 
 
 import com.stacksnow.flow.runner.spark.java.cli.ITask;
+import com.stacksnow.flow.runner.spark.java.contextmanagers.SparkFlowContext;
 import com.stacksnow.flow.runner.spark.java.model.FlowContext;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 
 import java.util.Map;
 
-public class ReadTableTask implements ITask<String> {
-   /* @Override
-    public Dataset<Row> execute(DataFlowContext dataFlowContext, List<Dataset> list, Map<String, Object> map) throws URISyntaxException {
-        long dataTableId = Long.parseLong((String) map.get("tableId"));
-        DataTableMetadata dataTableMetadata = dataFlowContext.getExplorerServices().getDataTableMetaData(dataFlowContext.getWorkspaceId(), dataTableId);
-        return dataFlowContext.getSparkSession().read().parquet(dataFlowContext.getDataTableAbsolutePath(dataTableMetadata));
-    }*/
-
+public class ReadTableTask implements ITask<Dataset<Row>> {
     @Override
-    public String execute(FlowContext flowContext, String[] set, Map<String, Object> map) throws Exception {
-        return "Tokenizer";
+    public Dataset<Row> execute(FlowContext flowContext, String[] ins, Map<String, Object> request) throws Exception {
+        String path = "s3a://" + request.get("bucketName") + "/tables/" + request.get("tableName");
+        SparkFlowContext context = (SparkFlowContext) flowContext;
+        return context.getSparkSession().read().parquet(path);
     }
 }

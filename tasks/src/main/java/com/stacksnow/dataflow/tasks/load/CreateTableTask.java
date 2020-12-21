@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class CreateTableTask implements ITask<String> {
+public class CreateTableTask implements ITask<Dataset<Row>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateTableTask.class);
 
@@ -57,26 +57,27 @@ public class CreateTableTask implements ITask<String> {
     }*/
 
     @Override
-    public String execute(FlowContext flowContext, String[] set, Map<String, Object> map) throws Exception {
-        return "Tokenizer";
+    public Dataset<Row> execute(FlowContext flowContext, String[] ins, Map<String, Object> request) throws Exception {
+        Dataset<Row> dataset = normalizeColumnNames((Dataset<Row>) flowContext.getResponse(ins[0]));
+        String path = "s3a://" + request.get("bucketName") + "/tables/" + request.get("tableName");
+        dataset.write()
+                .mode(String.valueOf(request.getOrDefault("mode", "error")))
+                .parquet(path);
+        return dataset;
     }
 
     private Dataset<Row> normalizeColumnNames(Dataset<Row> dataset) {
         Map<String, String> toBeConverted = new HashMap<>();
         String[] columnsNames = dataset.schema().fieldNames();
-
         Pattern pattern = Pattern.compile("//s+");
-
         Arrays.stream(columnsNames).forEach(column -> {
             if (pattern.matcher(column).matches()) {
                 toBeConverted.put(column, pattern.matcher(column).replaceAll("_"));
             }
         });
-
         for (Map.Entry<String, String> entrySet : toBeConverted.entrySet()) {
             dataset = dataset.withColumnRenamed(entrySet.getKey(), entrySet.getValue());
         }
-
         return dataset;
     }
 }
