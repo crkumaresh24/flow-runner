@@ -1,6 +1,6 @@
 package com.stacksnow.flow.runner.spark.java.cli;
 
-import com.stacksnow.flow.runner.spark.java.model.FlowContext;
+import com.stacksnow.flow.runner.spark.java.FlowContext;
 
 import java.util.Map;
 

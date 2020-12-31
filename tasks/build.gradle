@@ -22,7 +22,7 @@ dependencies {
 task buildAndCopyToStaticServer(type: Copy) {
     dependsOn publishToMavenLocal
     from jar // shortcut for createJar.outputs.files
-    into "../static-server/files/"
+    into "../services/src/main/resources/static/jars"
 }
 
 publishing {

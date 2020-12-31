@@ -1,7 +1,7 @@
 package com.stacksnow.dataflow.tasks.load;
 
+import com.stacksnow.flow.runner.spark.java.FlowContext;
 import com.stacksnow.flow.runner.spark.java.cli.ITask;
-import com.stacksnow.flow.runner.spark.java.model.FlowContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 

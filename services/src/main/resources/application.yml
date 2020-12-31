@@ -13,12 +13,21 @@ spring:
     hibernate:
       ddl-auto: update
 
+lake:
+  s3BucketName: mlops-lake
+
 livy:
-  url: http://localhost:8998
+  url: http://host.docker.internal:8998
 
-staticServer:
-  url: http://localhost:8000
+tasks:
+  url: http://host.docker.internal:9090/tasks
 
-flowServer:
-  url: http://localhost:9090
+jars:
+  url: http://host.docker.internal:9090/jars
+
+flows:
+  url: http://host.docker.internal:9090/flows
+
+processes:
+  url: http://host.docker.internal:9090/processes
 

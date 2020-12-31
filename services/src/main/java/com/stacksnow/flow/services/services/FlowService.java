@@ -1,4 +1,4 @@
-package com.stacksnow.flow.services;
+package com.stacksnow.flow.services.services;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
@@ -6,31 +6,31 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
+import com.stacksnow.flow.services.LivyRunner;
 import com.stacksnow.flow.services.models.DAG;
 import com.stacksnow.flow.services.models.Flow;
 import com.stacksnow.flow.services.models.Process;
 import com.stacksnow.flow.services.models.Status;
 import com.stacksnow.flow.services.repositories.IFlowRepository;
-import com.stacksnow.flow.services.repositories.IProcessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.net.URISyntaxException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Service
-public class Service {
+@Service
+public class FlowService {
 
     private final IFlowRepository flowRepository;
-    private final IProcessRepository processRepository;
+    private final ProcessService processService;
     private final LivyRunner livyRunner;
     private final AmazonS3 s3;
 
     @Autowired
-    public Service(IFlowRepository flowRepository, IProcessRepository processRepository, LivyRunner livyRunner) {
+    public FlowService(IFlowRepository flowRepository, ProcessService processService, LivyRunner livyRunner) {
         this.flowRepository = flowRepository;
-        this.processRepository = processRepository;
+        this.processService = processService;
         this.livyRunner = livyRunner;
         s3 = AmazonS3ClientBuilder
                 .standard()
@@ -51,9 +51,9 @@ public class Service {
         Process process = new Process();
         process.setFlow(flow);
         process.setStatus(Status.NOT_STARTED);
-        long livyJobId = this.livyRunner.run(id);
+        long livyJobId = this.livyRunner.run(process.getId().toString());
         process.setLivyJobId(livyJobId);
-        return this.processRepository.save(process);
+        return this.processService.create(process);
     }
 
     public Flow read(String id) {
@@ -71,28 +71,14 @@ public class Service {
 
     public void delete(String id) {
         Flow flow = read(id);
-        this.processRepository.findAllByFlow(flow).forEach(process -> {
-            killProcess(process.getId().toString());
+        this.processService.list().forEach(process -> {
+            try {
+                this.processService.delete(process.getId().toString());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         });
         this.flowRepository.delete(flow);
-    }
-
-    public Iterable<Process> processes() {
-        return this.processRepository.findAll();
-    }
-
-    public void killProcess(String id) {
-        this.processRepository.deleteById(UUID.fromString(id));
-    }
-
-    public Process updateProcessStatus(String id, Status status) {
-        Process process = readProcess(id);
-        process.setStatus(status);
-        return this.processRepository.save(process);
-    }
-
-    public Process readProcess(String id) {
-        return this.processRepository.findById(UUID.fromString(id)).orElseThrow(EntityNotFoundException::new);
     }
 
     public Iterable<String> buckets() {

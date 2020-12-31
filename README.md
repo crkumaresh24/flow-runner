@@ -7,14 +7,14 @@ cd flow-runner-spark-cluster-java
 ./gradlew clean buildAndCopyToStaticServer
 
 # Spark Submit on local
-./bin/spark-submit --class com.stacksnow.flow.runner.spark.java.App --jars http://localhost:8000/tasks-1.0-SNAPSHOT.jar http://localhost:8000/core-1.0-SNAPSHOT.jar  http://localhost:8000/runnerList.json dag.json
+./bin/spark-submit --class com.stacksnow.flow.runner.spark.java.FlowRunner --jars http://localhost:8000/tasks-1.0-SNAPSHOT.jar http://localhost:8000/core-1.0-SNAPSHOT.jar  http://localhost:8000/runnerList.json dag.json
 
 # Spark Submit on kubernetes
 ./bin/spark-submit \
     --master k8s://https://kubernetes.docker.internal:6443 \
     --deploy-mode client \
     --name spark-pi \
-    --class com.stacksnow.flow.runner.spark.java.App \
+    --class com.stacksnow.flow.runner.spark.java.FlowRunner \
     --conf spark.executor.instances=2 \
     --conf spark.kubernetes.container.image=apache-spark/spark:2.4.6 \
     --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \

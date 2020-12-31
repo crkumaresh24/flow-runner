@@ -1,7 +1,7 @@
 package com.stacksnow.dataflow.tasks.load;
 
+import com.stacksnow.flow.runner.spark.java.FlowContext;
 import com.stacksnow.flow.runner.spark.java.cli.ITask;
-import com.stacksnow.flow.runner.spark.java.model.FlowContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.slf4j.Logger;
@@ -59,7 +59,7 @@ public class CreateTableTask implements ITask<Dataset<Row>> {
     @Override
     public Dataset<Row> execute(FlowContext flowContext, String[] ins, Map<String, Object> request) throws Exception {
         Dataset<Row> dataset = normalizeColumnNames((Dataset<Row>) flowContext.getResponse(ins[0]));
-        String path = "s3a://" + request.get("bucketName") + "/tables/" + request.get("tableName");
+        String path = flowContext.getAbsoluteTablePath((String) request.get("tableName"));
         dataset.write()
                 .mode(String.valueOf(request.getOrDefault("mode", "error")))
                 .parquet(path);
