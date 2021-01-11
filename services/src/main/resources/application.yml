@@ -13,6 +13,12 @@ spring:
     hibernate:
       ddl-auto: update
 
+keycloak:
+  auth-server-url: http://host.docker.internal:8080/auth
+  realm: mlops
+  resource: flow-services
+  bearer-only: true
+
 lake:
   s3BucketName: mlops-lake
 
@@ -20,14 +26,20 @@ livy:
   url: http://host.docker.internal:8998
 
 tasks:
-  url: http://host.docker.internal:9090/tasks
+  url: http://host.docker.internal:9090/v1/api/tasks
 
 jars:
   url: http://host.docker.internal:9090/jars
 
 flows:
-  url: http://host.docker.internal:9090/flows
+  url: http://host.docker.internal:9090/v1/api/flows
 
 processes:
-  url: http://host.docker.internal:9090/processes
+  url: http://host.docker.internal:9090/v1/api/processes
 
+springdoc:
+  swagger-ui:
+    oauth2-redirect-url: http://localhost:9090/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
+    oauth:
+        client-id: flow-services-swagger
+        client-secret: 6588f5d8-cc6a-463e-a153-2bd7cdbe278c
