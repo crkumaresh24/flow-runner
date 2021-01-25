@@ -17,8 +17,8 @@ public class SparkFlowContext extends FlowContext {
             // https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html#General_S3A_Client_configuration
             this.sparkSession.sparkContext().hadoopConfiguration().set("fs.s3a.connection.ssl.enabled", "false");
             this.sparkSession.sparkContext().hadoopConfiguration().set("fs.s3a.aws.credentials.provider", "com.amazonaws.auth.DefaultAWSCredentialsProviderChain");
-            this.sparkSession.sparkContext().hadoopConfiguration().set("fs.s3a.access.key", "AKIA34NKTBVLNQRSKL2X");
-            this.sparkSession.sparkContext().hadoopConfiguration().set("fs.s3a.secret.key", "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");
+            this.sparkSession.sparkContext().hadoopConfiguration().set("fs.s3a.access.key", "");
+            this.sparkSession.sparkContext().hadoopConfiguration().set("fs.s3a.secret.key", "");
         }
         return this.sparkSession;
     }

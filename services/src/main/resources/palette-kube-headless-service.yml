@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-palette
+spec:
+  clusterIP: None
+  ports:
+    - port: 7077
+      targetPort: 7077
+      protocol: TCP
+      name: driver-rpc-port
+    - port: 7078
+      targetPort: 7078
+      protocol: TCP
+      name: blockmanager
+    - port: 7079
+      targetPort: 7079
+      protocol: TCP
+      name: blockmanager2
+  selector:
+    app.kubernetes.io/instance: palette
+    app.kubernetes.io/name: data-palette-1

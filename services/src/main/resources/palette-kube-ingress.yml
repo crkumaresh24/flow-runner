@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: data-palette
+  labels:
+    app.kubernetes.io/instance: palette
+    app.kubernetes.io/name: data-palette
+spec:
+  rules:
+    - host: data-palette.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: data-palette
+              servicePort: 9001
